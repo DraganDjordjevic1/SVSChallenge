@@ -29,9 +29,8 @@
             @Html.DisplayFor(modelItem => item.ProcedurePrice)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProcedureID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProcedureID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProcedureID })
+            @Html.ActionLink("Treatments Main Page", "Index", "Treatments") |
+            @Html.ActionLink("Treatments", "Treatments", new { id = item.ProcedureID }) |
         </td>
     </tr>
 }

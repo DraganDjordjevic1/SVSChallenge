@@ -20,6 +20,31 @@ namespace SVSCRUDASP.Controllers
         {
             return View(await db.Procedures.ToListAsync());
         }
+            public ActionResult details(int? id)
+            {
+                  if (id == null)
+                  {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                  }
+                  Treatment treatment = db.Treatments.Find(id);
+                  if (treatment == null)
+                  {
+                        return HttpNotFound();                  
+                  }
+
+                  return View(treatment);
+            }
+
+            public ActionResult Treatments(int? id)
+            {
+                  var treatments = db.Treatments.Include(b => b.Procedure).Include(b => b.Pet);
+                  if (treatments == null)
+                  {
+                        return HttpNotFound();
+                  }
+                  treatments = treatments.Where(x => x.ProcedureID == id);
+                  return View(treatments.ToList());
+            }
 
         // GET: Procedures/Details/5
         public async Task<ActionResult> Details(int? id)

@@ -26,12 +26,13 @@
             @Html.DisplayFor(modelItem => item.Type)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Owner.GivenName)
+            @Html.DisplayFor(modelItem => item.PetName)
+            
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { id=item.PetName }) |
+            @Html.ActionLink("Details", "Index", "Treatments") |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Type })
         </td>
     </tr>
 }

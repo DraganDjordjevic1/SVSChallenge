@@ -8,9 +8,24 @@ namespace SVSCRUDASP.Controllers
 {
       public class HomeController : Controller
       {
+
+            private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+            
+
             public ActionResult Index()
             {
-                  return View();
+                  try
+                  {
+                        logger.Trace("Main Window Opened");
+                        return View();
+                  }
+                  catch (Exception ex)
+                  {
+                        logger.Error(ex);
+                        throw;
+                  }
+                 
             }
 
             public ActionResult About()

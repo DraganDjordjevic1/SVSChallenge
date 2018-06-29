@@ -13,12 +13,15 @@ namespace SVSCRUDASP.Controllers
 {
     public class OwnersController : Controller
     {
-        private SVSChallengeEntities db = new SVSChallengeEntities();
+            private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+            private SVSChallengeEntities db = new SVSChallengeEntities();
 
         // GET: Owners
         public async Task<ActionResult> Index()
         {
-            return View(await db.Owners.ToListAsync());
+                  logger.Trace("Main Window Closed");
+                  return View(await db.Owners.ToListAsync());
         }
 
         // GET: Owners/Details/5

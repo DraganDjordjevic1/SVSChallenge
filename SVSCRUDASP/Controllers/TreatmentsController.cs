@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -16,20 +15,20 @@ namespace SVSCRUDASP.Controllers
         private SVSChallengeEntities db = new SVSChallengeEntities();
 
         // GET: Treatments
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             var treatments = db.Treatments.Include(t => t.Pet).Include(t => t.Procedure);
-            return View(await treatments.ToListAsync());
+            return View(treatments.ToList());
         }
 
         // GET: Treatments/Details/5
-        public async Task<ActionResult> Details(string id)
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Treatment treatment = await db.Treatments.FindAsync(id);
+            Treatment treatment = db.Treatments.Find(id);
             if (treatment == null)
             {
                 return HttpNotFound();
@@ -50,12 +49,12 @@ namespace SVSCRUDASP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "PetName,OwnerID,ProcedureID,TreatmentDate,Notes,TreatmentPrice")] Treatment treatment)
+        public ActionResult Create([Bind(Include = "PetName,OwnerID,ProcedureID,TreatmentDate,Notes,TreatmentPrice")] Treatment treatment)
         {
             if (ModelState.IsValid)
             {
                 db.Treatments.Add(treatment);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -65,13 +64,13 @@ namespace SVSCRUDASP.Controllers
         }
 
         // GET: Treatments/Edit/5
-        public async Task<ActionResult> Edit(string id)
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Treatment treatment = await db.Treatments.FindAsync(id);
+            Treatment treatment = db.Treatments.Find(id);
             if (treatment == null)
             {
                 return HttpNotFound();
@@ -86,12 +85,12 @@ namespace SVSCRUDASP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "PetName,OwnerID,ProcedureID,TreatmentDate,Notes,TreatmentPrice")] Treatment treatment)
+        public ActionResult Edit([Bind(Include = "PetName,OwnerID,ProcedureID,TreatmentDate,Notes,TreatmentPrice")] Treatment treatment)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(treatment).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.PetName = new SelectList(db.Pets, "PetName", "Type", treatment.PetName);
@@ -100,13 +99,13 @@ namespace SVSCRUDASP.Controllers
         }
 
         // GET: Treatments/Delete/5
-        public async Task<ActionResult> Delete(string id)
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Treatment treatment = await db.Treatments.FindAsync(id);
+            Treatment treatment = db.Treatments.Find(id);
             if (treatment == null)
             {
                 return HttpNotFound();
@@ -117,11 +116,11 @@ namespace SVSCRUDASP.Controllers
         // POST: Treatments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            Treatment treatment = await db.Treatments.FindAsync(id);
+            Treatment treatment = db.Treatments.Find(id);
             db.Treatments.Remove(treatment);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
